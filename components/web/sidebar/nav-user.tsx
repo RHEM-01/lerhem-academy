@@ -21,7 +21,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { MoreVerticalCircle01Icon, Logout01Icon, Home01FreeIcons, DashboardSquare02Icon, BookOpen01FreeIcons } from "@hugeicons/core-free-icons"
+import { Logout01Icon, Home01FreeIcons, DashboardSquare02Icon, BookOpen01FreeIcons, MoreVerticalCircle01Icon } from "@hugeicons/core-free-icons"
 import { authClient } from "@/lib/auth-client"
 import Link from "next/link"
 import { useSignOut } from "@/hooks/use-signout"
@@ -47,7 +47,11 @@ export function NavUser() {
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={session?.user.image ?? `https://avatar.vercel.sh/${session?.user.email}?rounded=60`} alt={session?.user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg">
+                  {session?.user.name && session?.user.name.length > 0 
+                    ? session?.user.name.charAt(0).toUpperCase() 
+                    : session?.user.email.charAt(0).toUpperCase()}
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{session?.user.name && session?.user.name.length > 0 ? session?.user.name : session?.user.email.split('@')[0]}</span>

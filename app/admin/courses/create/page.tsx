@@ -14,7 +14,7 @@ import { SparkleIcon } from "lucide-react";
 import slugify from "slugify";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { categories } from "@arcjet/next";
+import { RichTextEditor } from "@/components/rich-text-editor/editor";
 
 export default function CourseCreation() {
     const form = useForm<CourseSchemaType>({
@@ -126,13 +126,7 @@ export default function CourseCreation() {
                             render={({ field, fieldState }) => (
                                 <Field data-invalid={fieldState.invalid}>
                                     <FieldLabel htmlFor={field.name}>Description</FieldLabel>
-                                    <Textarea
-                                        {...field}
-                                        id={field.name}
-                                        aria-invalid={fieldState.invalid}
-                                        className="min-h-[120px]"
-                                        placeholder="Give a description for the course"
-                                    />
+                                    <RichTextEditor field={field} />
                                     {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                                 </Field>
                             )}
