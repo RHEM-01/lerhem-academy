@@ -36,7 +36,14 @@ export function Navbar() {
                     <div className="flex items-center space-x-4">
 
                         {isPending ? null : session ? (
-                            <UserDropDown name={session.user.name} email={session.user.email} image={session.user.image || ""} />
+                            <UserDropDown name={session.user.name} 
+                            email={
+                                session?.user.name && session?.user.name.length > 0 
+                                ? session?.user.name 
+                                : session?.user.email.split('@')[0]
+                                } 
+                            image={session?.user.image ?? `https://avatar.vercel.sh/${session?.user.email}?rounded=60`} 
+                            />
                         ) : (
                             <>
                                 <ThemeToggle />

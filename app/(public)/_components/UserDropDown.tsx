@@ -2,10 +2,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { BookOpen, Home, LayoutDashboardIcon, LogOut } from "lucide-react";
 import { ThemeToggle } from "@/components/web/theme-toggle";
-import { authClient } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import Link from "next/link";
+import { useSignOut } from "@/hooks/use-signout";
 
 interface iAppProps {
     name: string;
@@ -14,21 +12,7 @@ interface iAppProps {
 }
 
 export function UserDropDown({name, email, image}: iAppProps) {
-    const router = useRouter();
-    
-    async function sigOut() {
-        await authClient.signOut({
-            fetchOptions: {
-                onSuccess: () => {
-                    // router.push("/login");
-                    toast.success("Signed out successfully, and you are being redirected...")
-                },  
-                onError: () => {
-                    toast.error("Failed to sign out, please try again...")
-                }
-            },
-        })
-    }
+    const handleSignOut = useSignOut();
 
     return (
         <DropdownMenu>
@@ -81,7 +65,7 @@ export function UserDropDown({name, email, image}: iAppProps) {
                         </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={sigOut} className="text-[#FE0101] dark:text-[#FE0101]" >
+                    <DropdownMenuItem onClick={handleSignOut} className="text-[#FE0101] dark:text-[#FE0101]" >
                         <LogOut color="#FE0101"/>
                         Sign out
                     </DropdownMenuItem>
